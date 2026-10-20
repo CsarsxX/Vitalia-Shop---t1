@@ -46,12 +46,6 @@ export type AdminSection =
 
 export const AdminLayout: React.FC = () => {
   const { currentAdmin, logoutAdmin, setRoute, orders } = useStore();
-
-  useEffect(() => {
-    return () => {
-      logoutAdmin();
-    };
-  }, []);
   const [activeSection, setActiveSection] = useState<AdminSection>('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -168,7 +162,7 @@ export const AdminLayout: React.FC = () => {
 
             <div className="grid grid-cols-2 gap-2 pt-1 border-t border-[#1a1a1a]">
               <button
-                onClick={logoutAdmin}
+                onClick={() => setRoute('home')}
                 className="py-1.5 px-2 rounded-lg bg-[#141414] hover:bg-[#202020] text-[#A0A0A0] hover:text-[#F5F5F5] text-[11px] font-medium transition-colors flex items-center justify-center gap-1"
                 title="Ir a la tienda de jugadores"
               >

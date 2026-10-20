@@ -7,10 +7,12 @@ export const AdminLoginView: React.FC = () => {
 
   const [email, setEmail] = useState('');
   
-  // Load saved email on mount
+  // Load saved credentials on mount
   React.useEffect(() => {
     const savedEmail = localStorage.getItem('adminEmail');
+    const savedPass = localStorage.getItem('adminPassword');
     if (savedEmail) setEmail(savedEmail);
+    if (savedPass) setPassword(savedPass);
   }, []);
 
   const [password, setPassword] = useState('');
@@ -30,11 +32,13 @@ export const AdminLoginView: React.FC = () => {
       return;
     }
 
-    // Save email if rememberMe is checked
+    // Save credentials if rememberMe is checked
     if (rememberMe) {
       localStorage.setItem('adminEmail', email);
+      localStorage.setItem('adminPassword', password);
     } else {
       localStorage.removeItem('adminEmail');
+      localStorage.removeItem('adminPassword');
     }
 
     setIsLoading(true);

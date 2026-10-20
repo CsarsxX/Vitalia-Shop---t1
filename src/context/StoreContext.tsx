@@ -118,10 +118,29 @@ const StoreContext = createContext<StoreContextType | null>(null);
 
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [route, setRouteState] = useState<StoreRoute>('home');
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
+  
+  // 1. Products with persistence
+  const [products, setProducts] = useState<Product[]>(() => {
+    try {
+      const saved = localStorage.getItem('vitalia_products');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return INITIAL_PRODUCTS;
+  });
+
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [coupons, setCoupons] = useState<Coupon[]>(INITIAL_COUPONS);
+
+  // 2. Coupons with persistence
+  const [coupons, setCoupons] = useState<Coupon[]>(() => {
+    try {
+      const saved = localStorage.getItem('vitalia_coupons');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return INITIAL_COUPONS;
+  });
   const [activeCoupon, setActiveCoupon] = useState<Coupon | null>(null);
+
+  // 3. Orders with persistence - no mock resurrecting!
   const [orders, setOrders] = useState<Order[]>(() => {
     try {
       const deleted: string[] = JSON.parse(localStorage.getItem('vitalia_deleted_orders') || '[]');
@@ -130,73 +149,126 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         const parsed = JSON.parse(saved) as Order[];
         return parsed.filter(o => !deleted.includes(o.id));
       }
-      return INITIAL_ORDERS.filter(o => !deleted.includes(o.id));
-    } catch {
-      return INITIAL_ORDERS;
-    }
+    } catch {}
+    return [];
   });
-  const [settings, setSettings] = useState<StoreSettings>(INITIAL_SETTINGS);
-  const [adminUsers, setAdminUsers] = useState<AdminUser[]>(INITIAL_ADMIN_USERS);
-  const [currentAdmin, setCurrentAdmin] = useState<AdminUser | null>(null);
+
+  // 4. Store settings with persistence
+  const [settings, setSettings] = useState<StoreSettings>(() => {
+    try {
+      const saved = localStorage.getItem('vitalia_store_settings');
+      if (saved) {
+        return { ...INITIAL_SETTINGS, ...JSON.parse(saved) };
+      }
+    } catch {}
+    return INITIAL_SETTINGS;
+  });
+
+  // 5. Staff users with persistence
+  const [adminUsers, setAdminUsers] = useState<AdminUser[]>(() => {
+    try {
+      const saved = localStorage.getItem('vitalia_staff_users');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return INITIAL_ADMIN_USERS;
+  });
+
+  // 6. Admin session
+  const [currentAdmin, setCurrentAdmin] = useState<AdminUser | null>(() => {
+    try {
+      const saved = sessionStorage.getItem('vitalia_admin_session');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return null;
+  });
+
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>(INITIAL_AUDIT_LOGS);
   const [toasts, setToasts] = useState<ToastInfo[]>([]);
   const [activeDetailProduct, setActiveDetailProduct] = useState<Product | null>(null);
   const [activeInventoryKit, setActiveInventoryKit] = useState<{ title: string; badge?: string; items: any[] } | null>(null);
 
+  // Real-time Firestore sync
   useEffect(() => {
-    // Orders listener from Firestore
+    // A. Orders listener
     const unsubscribeOrders = onSnapshot(collection(db, 'orders'), (snapshot) => {
       let deletedIds: string[] = [];
       try {
         deletedIds = JSON.parse(localStorage.getItem('vitalia_deleted_orders') || '[]');
-      } catch {
-        deletedIds = [];
-      }
+      } catch {}
 
-      if (!snapshot.empty) {
-        const ordersData = snapshot.docs.map(docSnap => {
-          const data = docSnap.data() as Order;
-          return {
-            ...data,
-            id: data.id || docSnap.id,
-            _docId: docSnap.id,
-          };
-        });
+      const ordersData = snapshot.docs.map(docSnap => {
+        const data = docSnap.data() as Order;
+        return {
+          ...data,
+          id: data.id || docSnap.id,
+          _docId: docSnap.id,
+        };
+      }).filter(o => !deletedIds.includes(o.id) && !deletedIds.includes((o as any)._docId));
 
-        // Filter out any order that has been explicitly deleted
-        const activeOrders = ordersData.filter(o => !deletedIds.includes(o.id) && !deletedIds.includes((o as any)._docId));
-        activeOrders.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-        setOrders(activeOrders);
-        try {
-          localStorage.setItem('vitalia_orders', JSON.stringify(activeOrders));
-        } catch {}
-      } else {
-        // If Firestore is empty on very first store boot, seed once if not initialized
-        const hasInitialized = localStorage.getItem('vitalia_store_initialized');
-        if (!hasInitialized) {
-          localStorage.setItem('vitalia_store_initialized', 'true');
-          const cleanInitial = INITIAL_ORDERS.filter(o => !deletedIds.includes(o.id));
-          cleanInitial.forEach(order => {
-            setDoc(doc(db, 'orders', order.id), order).catch(() => {});
-          });
-          setOrders(cleanInitial);
-          try {
-            localStorage.setItem('vitalia_orders', JSON.stringify(cleanInitial));
-          } catch {}
-        } else {
-          // If already initialized and Firestore collection is empty, keep empty! Do not resurrect!
-          setOrders([]);
-          try {
-            localStorage.setItem('vitalia_orders', JSON.stringify([]));
-          } catch {}
-        }
-      }
+      ordersData.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      setOrders(ordersData);
+      try {
+        localStorage.setItem('vitalia_orders', JSON.stringify(ordersData));
+      } catch {}
     }, (error) => {
-      console.warn('Firestore onSnapshot notice:', error);
+      console.warn('Firestore orders notice:', error);
     });
-    
+
+    // B. Settings listener
+    const unsubscribeSettings = onSnapshot(doc(db, 'settings', 'general'), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data() as Partial<StoreSettings>;
+        setSettings(prev => {
+          const merged = { ...prev, ...data };
+          try {
+            localStorage.setItem('vitalia_store_settings', JSON.stringify(merged));
+          } catch {}
+          return merged;
+        });
+      }
+    }, (err) => {
+      console.warn('Firestore settings notice:', err);
+    });
+
+    // C. Products listener
+    const unsubscribeProducts = onSnapshot(doc(db, 'store_data', 'products'), (snap) => {
+      if (snap.exists() && snap.data()?.list) {
+        const list = snap.data().list as Product[];
+        setProducts(list);
+        try {
+          localStorage.setItem('vitalia_products', JSON.stringify(list));
+        } catch {}
+      }
+    }, () => {});
+
+    // D. Coupons listener
+    const unsubscribeCoupons = onSnapshot(doc(db, 'store_data', 'coupons'), (snap) => {
+      if (snap.exists() && snap.data()?.list) {
+        const list = snap.data().list as Coupon[];
+        setCoupons(list);
+        try {
+          localStorage.setItem('vitalia_coupons', JSON.stringify(list));
+        } catch {}
+      }
+    }, () => {});
+
+    // E. Staff users listener
+    const unsubscribeStaff = onSnapshot(doc(db, 'store_data', 'admin_users'), (snap) => {
+      if (snap.exists() && snap.data()?.list) {
+        const list = snap.data().list as AdminUser[];
+        setAdminUsers(list);
+        try {
+          localStorage.setItem('vitalia_staff_users', JSON.stringify(list));
+        } catch {}
+      }
+    }, () => {});
+
     return () => {
       unsubscribeOrders();
+      unsubscribeSettings();
+      unsubscribeProducts();
+      unsubscribeCoupons();
+      unsubscribeStaff();
     };
   }, []);
 
@@ -206,15 +278,19 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     window.location.hash = r;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
   useEffect(() => {
     const handleHash = () => {
-      const hash = window.location.hash.replace('#', '') as StoreRoute;
-      if (hash && [
+      const cleanHash = window.location.hash.replace(/^#\/?/, '').trim() as StoreRoute;
+      const validRoutes: StoreRoute[] = [
         'home', 'catalog', 'oneblock', 'lifesteal', 'global', 'ranks', 'upgrades', 'kits', 'extras', 
         'cart', 'checkout', 'order-lookup', 'help', 'terms', 'privacy', 
         'admin-login', 'admin'
-      ].includes(hash)) {
-        setRouteState(hash);
+      ];
+      if (cleanHash && validRoutes.includes(cleanHash)) {
+        setRouteState(cleanHash);
+      } else if (!window.location.hash || window.location.hash === '#' || window.location.hash === '#/') {
+        setRouteState('home');
       }
     };
     handleHash();
@@ -249,13 +325,27 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   // Products update
   const updateProduct = (updated: Product) => {
-    setProducts(prev => prev.map(p => (p.id === updated.id ? updated : p)));
+    setProducts(prev => {
+      const next = prev.map(p => (p.id === updated.id ? updated : p));
+      try {
+        localStorage.setItem('vitalia_products', JSON.stringify(next));
+      } catch {}
+      setDoc(doc(db, 'store_data', 'products'), { list: next }).catch(() => {});
+      return next;
+    });
     addAuditLog('Actualización de Producto', updated.name, `Precio: ${updated.price ? '$' + updated.price : 'Pendiente'}`);
     showToast('Producto actualizado', `Se han guardado los cambios en ${updated.name}`, 'success');
   };
 
   const addProduct = (newProd: Product) => {
-    setProducts(prev => [newProd, ...prev]);
+    setProducts(prev => {
+      const next = [newProd, ...prev];
+      try {
+        localStorage.setItem('vitalia_products', JSON.stringify(next));
+      } catch {}
+      setDoc(doc(db, 'store_data', 'products'), { list: next }).catch(() => {});
+      return next;
+    });
     addAuditLog('Creación de Producto', newProd.name, `Categoría: ${newProd.category}`);
     showToast('Producto creado', `${newProd.name} añadido al catálogo`, 'success');
   };
@@ -367,19 +457,40 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const createCoupon = (c: Coupon) => {
-    setCoupons(prev => [c, ...prev]);
+    setCoupons(prev => {
+      const next = [c, ...prev.filter(item => item.code !== c.code)];
+      try {
+        localStorage.setItem('vitalia_coupons', JSON.stringify(next));
+      } catch {}
+      setDoc(doc(db, 'store_data', 'coupons'), { list: next }).catch(() => {});
+      return next;
+    });
     addAuditLog('Creación de Cupón', c.code, `Tipo: ${c.type}, Valor: ${c.value}`);
     showToast('Cupón creado', `Código ${c.code} registrado correctamente`, 'success');
   };
 
   const updateCoupon = (c: Coupon) => {
-    setCoupons(prev => prev.map(item => item.code === c.code ? c : item));
+    setCoupons(prev => {
+      const next = prev.map(item => item.code === c.code ? c : item);
+      try {
+        localStorage.setItem('vitalia_coupons', JSON.stringify(next));
+      } catch {}
+      setDoc(doc(db, 'store_data', 'coupons'), { list: next }).catch(() => {});
+      return next;
+    });
     addAuditLog('Modificación de Cupón', c.code, `Activo: ${c.isActive ? 'Sí' : 'No'}`);
     showToast('Cupón actualizado', `Cambios guardados en ${c.code}`, 'success');
   };
 
   const deleteCoupon = (code: string) => {
-    setCoupons(prev => prev.filter(c => c.code !== code));
+    setCoupons(prev => {
+      const next = prev.filter(c => c.code !== code);
+      try {
+        localStorage.setItem('vitalia_coupons', JSON.stringify(next));
+      } catch {}
+      setDoc(doc(db, 'store_data', 'coupons'), { list: next }).catch(() => {});
+      return next;
+    });
     if (activeCoupon?.code === code) setActiveCoupon(null);
     addAuditLog('Eliminación de Cupón', code, 'Cupón eliminado del sistema', 'warning');
     showToast('Cupón eliminado', `El cupón ${code} ha sido borrado`, 'info');
@@ -554,7 +665,18 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   const updateSettings = (newSettings: Partial<StoreSettings>) => {
-    setSettings(prev => ({ ...prev, ...newSettings }));
+    setSettings(prev => {
+      const updated = { ...prev, ...newSettings };
+      try {
+        localStorage.setItem('vitalia_store_settings', JSON.stringify(updated));
+      } catch {}
+      return updated;
+    });
+
+    setDoc(doc(db, 'settings', 'general'), newSettings, { merge: true }).catch(err => {
+      console.warn('Notice saving settings to Firestore:', err);
+    });
+
     addAuditLog('Configuración Actualizada', 'Sistema General', 'Modificación de parámetros generales');
     showToast('Ajustes guardados', 'Los parámetros de la tienda se actualizaron con éxito', 'success');
   };
@@ -565,6 +687,9 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     // Check for the specific master password
     if (found && pass === '2026-vitalia-network-wazita-@@@') {
       setCurrentAdmin(found);
+      try {
+        sessionStorage.setItem('vitalia_admin_session', JSON.stringify(found));
+      } catch {}
       addAuditLog('Inicio de Sesión', 'Panel Administrativo', `Acceso autorizado para ${found.name} (${found.role})`);
       showToast('Bienvenido al Panel', `Sesión iniciada como ${found.name}`, 'success');
       return true;
@@ -579,18 +704,35 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       addAuditLog('Cierre de Sesión', 'Panel Administrativo', `Sesión finalizada por ${currentAdmin.name}`);
     }
     setCurrentAdmin(null);
+    try {
+      sessionStorage.removeItem('vitalia_admin_session');
+    } catch {}
     setRoute('admin-login');
     showToast('Sesión cerrada', 'Has salido del panel de administración', 'info');
   };
 
   const addAdminUser = (u: AdminUser) => {
-    setAdminUsers(prev => [...prev, u]);
+    setAdminUsers(prev => {
+      const next = [...prev, u];
+      try {
+        localStorage.setItem('vitalia_staff_users', JSON.stringify(next));
+      } catch {}
+      setDoc(doc(db, 'store_data', 'admin_users'), { list: next }).catch(() => {});
+      return next;
+    });
     addAuditLog('Alta de Administrador', u.email, `Rol asignado: ${u.role}`);
     showToast('Usuario creado', `Se ha registrado al usuario ${u.name}`, 'success');
   };
 
   const updateAdminUser = (u: AdminUser) => {
-    setAdminUsers(prev => prev.map(item => item.id === u.id ? u : item));
+    setAdminUsers(prev => {
+      const next = prev.map(item => item.id === u.id ? u : item);
+      try {
+        localStorage.setItem('vitalia_staff_users', JSON.stringify(next));
+      } catch {}
+      setDoc(doc(db, 'store_data', 'admin_users'), { list: next }).catch(() => {});
+      return next;
+    });
     addAuditLog('Modificación de Usuario', u.email, `Estado: ${u.isActive ? 'Activo' : 'Inactivo'}, Rol: ${u.role}`);
     showToast('Usuario actualizado', `Cambios guardados para ${u.name}`, 'success');
   };
@@ -601,7 +743,14 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       showToast('Acción denegada', 'No puedes eliminar al único Super Administrador del sistema.', 'error');
       return;
     }
-    setAdminUsers(prev => prev.filter(u => u.id !== userId));
+    setAdminUsers(prev => {
+      const next = prev.filter(u => u.id !== userId);
+      try {
+        localStorage.setItem('vitalia_staff_users', JSON.stringify(next));
+      } catch {}
+      setDoc(doc(db, 'store_data', 'admin_users'), { list: next }).catch(() => {});
+      return next;
+    });
     addAuditLog('Baja de Administrador', target?.email || userId, `Cuenta eliminada por ${currentAdmin?.name}`, 'warning');
     showToast('Usuario eliminado', `La cuenta de ${target?.name || 'Administrador'} ha sido dada de baja`, 'info');
   };

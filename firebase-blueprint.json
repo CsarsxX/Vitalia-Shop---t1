@@ -6,6 +6,7 @@
       "type": "object",
       "properties": {
         "id": { "type": "string" },
+        "referenceCode": { "type": "string" },
         "mcUsername": { "type": "string" },
         "email": { "type": "string" },
         "modality": { "type": "string" },
@@ -13,15 +14,45 @@
         "paymentStatus": { "type": "string" },
         "deliveryStatus": { "type": "string" },
         "createdAt": { "type": "string" },
-        "total": { "type": "number" }
+        "total": { "type": "number" },
+        "totalPEN": { "type": "number" },
+        "items": { "type": "array" },
+        "internalNotes": { "type": "string" },
+        "timeline": { "type": "array" }
       },
       "required": ["id", "mcUsername", "email", "modality", "createdAt"]
+    },
+    "StoreSettings": {
+      "title": "StoreSettings",
+      "description": "Global store configuration and parameters",
+      "type": "object",
+      "properties": {
+        "serverIp": { "type": "string" },
+        "storeName": { "type": "string" },
+        "paymentHolderName": { "type": "string" },
+        "yapeNumber": { "type": "string" },
+        "plinNumber": { "type": "string" },
+        "paypalEmail": { "type": "string" },
+        "exchangeRateUSD_PEN": { "type": "number" },
+        "maintenanceMode": { "type": "boolean" },
+        "announcementText": { "type": "string" },
+        "announcementActive": { "type": "boolean" },
+        "discordLink": { "type": "string" }
+      }
     }
   },
   "firestore": {
     "/orders/{orderId}": {
       "schema": "Order",
       "description": "Stores user purchase orders"
+    },
+    "/settings/{settingId}": {
+      "schema": "StoreSettings",
+      "description": "Global configuration document (e.g. general)"
+    },
+    "/store_data/{docId}": {
+      "schema": "object",
+      "description": "Store collections such as products, coupons, and staff"
     }
   }
 }
