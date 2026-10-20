@@ -1,0 +1,1185 @@
+# PROMPT MAESTRO PARA STITCH — VITALIA NETWORK STORE
+## Diseño UI/UX profesional de tienda Minecraft + panel administrativo independiente
+
+Actúa como un **Senior UI/UX Designer especializado en e-commerce gaming, tiendas de Minecraft, dashboards administrativos y diseño de interfaces premium**.
+
+Diseña la interfaz completa de **VITALIA NETWORK STORE**, una tienda web para vender rangos, kits y mejoras para las modalidades OneBlock y LifeSteal de un servidor de Minecraft.
+
+**IMPORTANTE: esta primera fase es exclusivamente de UI/UX.** Diseña las pantallas, los componentes, los estados, las interacciones visuales y la navegación. No necesitas implementar todavía la base de datos, el backend ni los pagos reales. La interfaz debe quedar preparada para que posteriormente un desarrollador conecte todas las funciones.
+
+La web debe dividirse claramente en DOS APARTADOS INDEPENDIENTES:
+
+1. **TIENDA PÚBLICA:** para que los jugadores exploren productos, comparen rangos, compren extras y consulten sus pedidos.
+2. **PANEL ADMINISTRATIVO:** para que los administradores gestionen ventas, productos, rangos, kits, extras, descuentos, pagos y registros de actividad.
+
+Ambos apartados deben compartir la identidad visual, pero tener estructuras de navegación, objetivos y experiencias diferentes.
+
+---
+
+# 1. IDENTIDAD VISUAL
+
+Crea una estética premium inspirada en servidores de Minecraft de alta calidad.
+
+### Paleta de colores
+
+- Fondo principal: `#050505`.
+- Fondo secundario: `#0A0A0A`.
+- Tarjetas: `#101010`.
+- Superficies elevadas: `#161616`.
+- Bordes: `#252525`.
+- Dorado principal: `#D4AF37`.
+- Dorado brillante: `#FFD700`.
+- Dorado suave: `#FEF9C2`.
+- Texto principal: `#F5F5F5`.
+- Texto secundario: `#A0A0A0`.
+- Rojo de error: `#FF4545`.
+- Verde de éxito: `#00FF87`.
+
+### Estilo visual
+
+- Diseño oscuro, elegante y minimalista.
+- Inspiración en interfaces gaming premium y tiendas digitales modernas.
+- Tipografía limpia, geométrica y legible.
+- Iconografía consistente.
+- Bordes finos y radios moderados.
+- Gradientes dorados sutiles.
+- Efectos hover elegantes.
+- Animaciones breves y fluidas.
+- Sombras discretas y profundidad visual.
+- Excelente contraste y jerarquía visual.
+
+Evita el exceso de dorado, las tarjetas recargadas, los brillos exagerados y los efectos que dificulten la lectura.
+
+Usa elementos visuales relacionados con Minecraft únicamente donde aporten valor: iconos de rangos, armaduras, herramientas, bloques y objetos de inventario.
+
+La interfaz debe funcionar perfectamente en escritorio, tablet y móvil.
+
+---
+
+# 2. ESTRUCTURA GENERAL DEL PROYECTO
+
+Diseña las siguientes áreas independientes.
+
+## Apartado A: tienda pública
+
+Rutas visuales de referencia:
+
+- `/` — Inicio.
+- `/tienda` — Catálogo general.
+- `/tienda/oneblock` — Productos de OneBlock.
+- `/tienda/lifesteal` — Productos de LifeSteal.
+- `/tienda/rangos` — Catálogo de rangos.
+- `/tienda/kits` — Kits especiales.
+- `/tienda/extras` — Mejoras y extras.
+- `/carrito` — Carrito de compras.
+- `/checkout` — Revisión del pedido y pago.
+- `/pedido` — Consulta de pedidos.
+- `/ayuda` — Preguntas frecuentes y soporte.
+- `/terminos` — Términos y condiciones.
+- `/privacidad` — Política de privacidad.
+
+## Apartado B: panel administrativo
+
+Ruta de referencia:
+
+- `/vitalia-control`
+
+Debe contar con una interfaz propia, navegación lateral, dashboard, tablas, filtros, formularios, modales y páginas de gestión.
+
+El panel no debe parecer una extensión del catálogo de la tienda. Tiene que sentirse como un software profesional de administración de e-commerce.
+
+**No mezcles la navegación de los jugadores con la de los administradores.**
+
+---
+
+# 3. TIENDA PÚBLICA — PÁGINA DE INICIO
+
+Diseña una página de inicio impactante y organizada.
+
+## Barra de navegación
+
+Incluye:
+
+- Logotipo de VITALIA NETWORK.
+- Inicio.
+- Tienda.
+- OneBlock.
+- LifeSteal.
+- Rangos.
+- Extras.
+- Ayuda.
+- Icono de carrito con contador de productos.
+- Botón destacado «Explorar tienda».
+
+En móvil, utiliza un menú desplegable elegante.
+
+## Hero principal
+
+Crea una sección destacada con:
+
+- Título: «TU AVENTURA. TU IMPERIO. TU LEGADO.»
+- Subtítulo: «Mejora tu experiencia y lleva tu progreso al siguiente nivel».
+- Botón principal: «Explorar rangos».
+- Botón secundario: «Descubrir modalidades».
+- Elementos visuales inspirados en Minecraft.
+- Fondo oscuro con iluminación dorada discreta.
+
+No inventes estadísticas de jugadores conectados, ventas o usuarios registrados.
+
+## Modalidades
+
+Presenta dos tarjetas principales:
+
+### ONEBLOCK
+
+- Iconografía de isla flotante.
+- Descripción sobre construir, expandir y mejorar una isla.
+- Botón «Explorar OneBlock».
+
+### LIFESTEAL
+
+- Iconografía relacionada con corazones y combate.
+- Descripción sobre supervivencia, PvP y progresión.
+- Botón «Explorar LifeSteal».
+
+Cada tarjeta debe dirigir a su catálogo correspondiente.
+
+## Sección de rangos destacados
+
+Muestra tarjetas de los rangos principales, con nombre, precio, beneficios destacados y botón para ver detalles.
+
+## Sección de extras
+
+Destaca las mejoras exclusivas de OneBlock, las herramientas especiales y los kits avanzados.
+
+## Pie de página
+
+Incluye enlaces de navegación, soporte, términos, privacidad y conexión al servidor.
+
+---
+
+# 4. CATÁLOGO COMERCIAL DE SEIS RANGOS
+
+La tienda tendrá exactamente estos seis rangos comerciales, en el siguiente orden:
+
+| Nivel | Rango | Precio |
+|---|---|---:|
+| 1 | Pulso | $2.99 |
+| 2 | Ascend | $5.99 |
+| 3 | Imperium | $9.99 |
+| 4 | Infinity | $14.99 |
+| 5 | Vital | $21.99 |
+| 6 | Vitalia | $29.00 |
+
+Todos los precios de los rangos están expresados en USD.
+
+**El rango máximo cuesta $29 USD.** No agregues otros rangos comerciales ni muestres Vital+ como un producto independiente.
+
+## Diseño de las tarjetas
+
+Cada tarjeta debe incluir:
+
+- Insignia y nombre del rango.
+- Número de nivel.
+- Precio destacado.
+- Descripción breve.
+- Lista de beneficios.
+- Kit incluido.
+- Beneficios de comandos.
+- Modalidad correspondiente.
+- Botón «Ver beneficios».
+- Botón «Agregar al carrito».
+
+La tarjeta de Vitalia debe destacar como «RANGO MÁXIMO», con una presentación dorada premium.
+
+Vital debe destacar como el rango inmediatamente anterior al máximo.
+
+No hagas que todas las tarjetas parezcan iguales: utiliza una jerarquía visual progresiva sin sacrificar la coherencia del diseño.
+
+## Beneficios de referencia para OneBlock
+
+| Rango | PlayerVaultsX | Homes |
+|---|---:|---:|
+| Pulso | 3 | 4 |
+| Ascend | 5 | 5 |
+| Imperium | 7 | 7 |
+| Infinity | 9 | 9 |
+| Vital | 11 | 12 |
+| Vitalia | 16 | 20 |
+
+Estos valores son la propuesta inicial para mostrar en la interfaz. Deben poder editarse posteriormente desde el panel administrativo.
+
+Default conserva sus límites gratuitos configurados en el servidor.
+
+## Beneficios propios de LifeSteal
+
+Crea una progresión independiente de OneBlock, con sus propios beneficios, kits, permisos y productos.
+
+No copies automáticamente todas las ventajas de OneBlock a LifeSteal.
+
+Los beneficios deben presentarse de forma visual, ordenada y comprensible. Evita prometer ventajas que no estén configuradas realmente en el servidor.
+
+---
+
+# 5. COMANDO /FLY Y KITS POR RANGO
+
+Este apartado es obligatorio tanto en el catálogo como en las fichas detalladas de los rangos.
+
+## Acceso a /fly
+
+A partir de **Imperium**, los rangos incorporan el comando `/fly`.
+
+La progresión visual debe ser:
+
+| Rango | Acceso a /fly |
+|---|---|
+| Pulso | No incluido |
+| Ascend | No incluido |
+| Imperium | Incluido |
+| Infinity | Incluido |
+| Vital | Incluido |
+| Vitalia | Incluido |
+
+Muestra un icono de vuelo junto al beneficio y una insignia como «VUELO INCLUIDO» en los rangos correspondientes.
+
+No muestres `/fly` como beneficio de Pulso o Ascend.
+
+Presenta el beneficio como una ventaja del rango, no como una función que ya se encuentra conectada a un servidor real.
+
+## Kit propio para cada rango
+
+**Todos los rangos deben tener su propio kit.** Ningún rango debe aparecer sin un kit asignado.
+
+Cada rango tendrá un kit identificable y configurable, con nombre, icono, descripción, objetos incluidos y encantamientos.
+
+Crea la siguiente organización visual:
+
+- Kit Pulso.
+- Kit Ascend.
+- Kit Imperium.
+- Kit Infinity.
+- Kit Vital.
+- Kit Vitalia.
+
+Los kits deben mostrarse como un beneficio incluido en la compra del rango correspondiente.
+
+Cada ficha debe permitir consultar el contenido del kit en una vista detallada, preferiblemente mediante un modal con una cuadrícula de objetos al estilo del inventario de Minecraft.
+
+El contenido exacto de cada kit de rango debe ser configurable desde el panel administrativo. No inventes cantidades, encantamientos o recompensas definitivas que todavía no hayan sido especificadas.
+
+Diferencia claramente entre:
+
+1. Kit incluido con el rango.
+2. Kits especiales que se compran por separado.
+3. Extras y herramientas que se compran individualmente.
+
+No presentes un kit especial como si estuviera incluido en un rango, salvo que se configure expresamente.
+
+---
+
+# 6. EXTRAS EXCLUSIVOS DE ONEBLOCK
+
+Crea una sección independiente llamada «Extras OneBlock».
+
+Debe tener tarjetas individuales, precios visibles, iconos de los objetos, descripciones cortas y una vista detallada para consultar las características.
+
+Estos productos solo deben pertenecer a OneBlock y nunca deben confundirse con los productos de LifeSteal.
+
+## 6.1. Aplanar la isla
+
+**Precio: $3.00 USD.**
+
+Nombre comercial: «Aplanar la isla».
+
+Descripción: «Rellena la superficie de tu isla con una capa uniforme de césped para conseguir una base plana y lista para construir».
+
+Detalles visuales:
+
+- Icono: `GRASS_BLOCK`.
+- Insignia: «MEJORA DE ISLA».
+- Precio visible: `$3.00`.
+- Botón: «Ver detalles».
+- Botón: «Agregar al carrito».
+
+Representa visualmente el resultado como una isla cuya superficie queda cubierta por una sola capa de bloques `GRASS_BLOCK`.
+
+No añadas varias capas de tierra, bloques de piedra ni modificaciones adicionales.
+
+La ficha debe explicar que el servicio modifica la isla del comprador. No simules una ejecución exitosa ni prometas que ya se ha realizado el cambio.
+
+## 6.2. Herramientas especiales
+
+Crea tres productos individuales y una oferta combinada.
+
+### Producto A — Pico 3x3
+
+- Nombre: «Pico 3x3».
+- Precio individual: `$5.00 USD`.
+- Efecto: minería en área de 3x3.
+- Encantamiento de referencia: Eficiencia VII.
+- Icono: pico de netherita.
+- Categoría: Herramientas OneBlock.
+
+La tarjeta debe destacar el efecto 3x3 y el nivel de eficiencia.
+
+### Producto B — Pico Efficiency 35
+
+- Nombre: «Pico Efficiency 35».
+- Precio: configurable desde el panel administrativo.
+- Encantamientos especificados: Eficiencia XXXV y Fortuna V.
+- Restricción: solo debe incluir Eficiencia 35 y Fortuna 5 como encantamientos; no añadas otros encantamientos.
+- Icono: pico de netherita.
+- Categoría: Herramientas OneBlock.
+
+No inventes un precio para este producto. El administrador deberá configurarlo antes de publicarlo.
+
+### Producto C — Hacha 3x3
+
+- Nombre: «Hacha 3x3».
+- Precio individual: `$5.00 USD`.
+- Efecto: tala en área de 3x3.
+- Encantamiento de referencia: Eficiencia VII.
+- Icono: hacha de netherita.
+- Categoría: Herramientas OneBlock.
+
+### Oferta combinada — Pack de herramientas 3x3
+
+- Nombre: «Pack 3x3».
+- Precio: `$7.50 USD`.
+- Incluye: Pico 3x3 + Hacha 3x3.
+- Ahorro frente a la compra individual: `$2.50 USD`.
+- Insignia: «PACK AHORRO».
+
+La oferta combinada debe aparecer como un producto independiente, pero vinculado a sus dos herramientas originales.
+
+Si el comprador ya tiene alguno de los objetos en el carrito, muestra un aviso visual para que pueda revisar su selección antes de pagar.
+
+No añadas el pico Efficiency 35 al pack de $7.50.
+
+---
+
+# 7. KITS ESPECIALES DE ONEBLOCK
+
+Crea un apartado diferenciado llamado «Kits Especiales».
+
+Estos productos se compran por separado y no sustituyen los kits que cada rango incluye.
+
+## Kit Destructor
+
+- Nombre: «Kit Destructor».
+- Precio: `$7.00 USD`.
+- Armadura: conjunto completo de netherita.
+- Protección: nivel 10.
+- Encantamientos: adicionales, configurables y superiores a los de un kit básico.
+- Estilo visual: rojo oscuro con detalles dorados.
+- Insignia: «PODER AVANZADO».
+
+Presenta la armadura completa en una composición visual con sus cuatro piezas y una vista del contenido del kit.
+
+La ficha debe mostrar claramente que incluye un conjunto completo de netherita con Protección X y encantamientos adicionales.
+
+## Kit God
+
+- Nombre: «Kit God».
+- Armadura: conjunto completo de netherita.
+- Protección: nivel 15.
+- Encantamientos: adicionales, configurables y superiores a los de un kit básico.
+- Estilo visual: dorado premium.
+- Insignia: «PODER SUPREMO».
+
+**El precio del Kit God todavía no está definido.** Muéstralo con un estado «Precio próximamente» o «Pendiente de configuración» en el prototipo, sin inventar un importe.
+
+El administrador podrá asignar su precio desde el panel antes de publicarlo y habilitar la compra.
+
+## Diseño de los kits especiales
+
+Cada kit debe incluir:
+
+- Imagen o representación de sus objetos.
+- Nombre.
+- Precio o estado de configuración.
+- Nivel de Protección.
+- Resumen de encantamientos.
+- Botón «Ver contenido».
+- Botón «Agregar al carrito», solo si el producto está habilitado.
+
+Usa una ventana modal para visualizar el inventario completo del kit.
+
+No inventes encantamientos específicos que no se hayan definido. Deja los campos adicionales como contenido configurable.
+
+---
+
+# 8. FILTROS Y ORGANIZACIÓN DEL CATÁLOGO
+
+La tienda debe ser fácil de explorar.
+
+Implementa filtros visuales para:
+
+- Modalidad: OneBlock o LifeSteal.
+- Categoría: Rangos, Kits, Herramientas y Mejoras.
+- Precio.
+- Productos destacados.
+- Productos habilitados.
+- Orden por precio y nivel.
+
+Incluye un buscador de productos.
+
+Los filtros deben actualizar visualmente el catálogo del prototipo.
+
+En OneBlock, organiza los productos con pestañas o categorías:
+
+1. Rangos.
+2. Kits de rango.
+3. Kits especiales.
+4. Herramientas.
+5. Mejoras de isla.
+
+En LifeSteal, muestra los rangos y los kits correspondientes a esa modalidad.
+
+No muestres productos exclusivos de OneBlock dentro del catálogo de LifeSteal.
+
+---
+
+# 9. FICHA DETALLADA DE PRODUCTO
+
+Al pulsar «Ver beneficios» o «Ver detalles», muestra una página o modal de producto profesional.
+
+Debe incluir:
+
+- Nombre del producto.
+- Imagen o icono.
+- Precio.
+- Modalidad.
+- Descripción completa.
+- Beneficios.
+- Objetos incluidos.
+- Encantamientos.
+- Requisitos o limitaciones.
+- Botón «Agregar al carrito».
+- Productos relacionados.
+
+Para rangos, muestra las ventajas del rango, el acceso a `/fly` cuando corresponda y su kit incluido.
+
+Para herramientas, muestra sus encantamientos y efectos.
+
+Para kits, muestra los objetos individuales del inventario.
+
+Para «Aplanar la isla», explica que consiste en rellenar la superficie con una capa de `GRASS_BLOCK`.
+
+---
+
+# 10. CARRITO DE COMPRAS
+
+Diseña un carrito independiente del catálogo.
+
+Al pulsar «Agregar al carrito»:
+
+- Añade el producto.
+- Actualiza el contador.
+- Muestra una notificación discreta.
+- Mantiene al usuario en la página actual.
+- No abre el carrito automáticamente.
+
+El carrito solo se abrirá al pulsar su icono o el botón «Ver carrito».
+
+Debe mostrar:
+
+- Nombre del producto.
+- Modalidad.
+- Categoría.
+- Precio unitario.
+- Cantidad cuando sea aplicable.
+- Subtotal.
+- Código de descuento.
+- Descuento aplicado.
+- Total.
+- Botón para eliminar productos.
+- Botón «Continuar comprando».
+- Botón «Continuar al pago».
+
+Los rangos, kits y herramientas únicas no deben tratarse como artículos infinitamente acumulables. Muestra una advertencia si se intenta añadir varias veces el mismo producto único.
+
+Mantén visualmente separados los productos de OneBlock y LifeSteal.
+
+---
+
+# 11. CHECKOUT Y PAGOS
+
+Diseña un proceso de compra por pasos, limpio y fácil de entender.
+
+### Paso 1 — Datos del comprador
+
+Solicita:
+
+- Correo electrónico.
+- Nombre de usuario de Minecraft.
+- Modalidad.
+- Resumen del pedido.
+
+### Paso 2 — Revisión del pedido
+
+Muestra los productos, descuentos, subtotal, total y moneda.
+
+### Paso 3 — Métodos de pago
+
+Los métodos de pago no deben aparecer mientras el usuario explora la tienda.
+
+Solo se mostrarán después de pulsar «Continuar al pago».
+
+Diseña tarjetas para:
+
+**Yape**
+- Área para el QR real.
+- Titular: Milvan Bac.
+- Importe exacto.
+- Instrucciones de pago.
+
+**Plin**
+- Área para el QR real.
+- Titular: Milvan Bac.
+- Importe exacto.
+- Instrucciones de pago.
+
+**PayPal**
+- Estado: «En mantenimiento».
+- Botón deshabilitado.
+- Texto: «PayPal está temporalmente en mantenimiento. Estará disponible próximamente».
+
+No inventes los QR. Utiliza áreas de imagen que posteriormente recibirán las imágenes reales.
+
+Diseña el botón «Ya he realizado el pago» y una pantalla de confirmación de envío del comprobante.
+
+Después de notificar el pago, muestra:
+
+- Número de pedido.
+- Código de referencia.
+- Método de pago.
+- Importe.
+- Estado «En revisión».
+- Mensaje de que el pago todavía debe verificarse.
+
+La interfaz nunca debe indicar que un pago está confirmado solo porque el comprador pulsó un botón.
+
+---
+
+# 12. CONSULTA DE PEDIDOS
+
+Diseña una página donde el comprador pueda consultar sus pedidos mediante una referencia y una verificación adicional.
+
+Incluye:
+
+- Campo para el identificador del pedido.
+- Campo de verificación.
+- Botón «Consultar pedido».
+- Resumen del pedido.
+- Productos comprados.
+- Fecha.
+- Método de pago.
+- Código de referencia.
+- Estado del pago.
+- Estado de entrega.
+
+Utiliza una línea de tiempo visual:
+
+1. Pedido creado.
+2. Pago notificado.
+3. Pago en revisión.
+4. Pago confirmado.
+5. Entrega pendiente.
+6. Entregado.
+
+Incluye también estados de cancelación y rechazo.
+
+No muestres datos personales ni pedidos ajenos.
+
+---
+
+# 13. PANEL ADMINISTRATIVO INDEPENDIENTE
+
+Diseña un dashboard administrativo completo y separado de la tienda pública.
+
+Ruta visual: `/vitalia-control`.
+
+El panel debe usar un diseño oscuro profesional con detalles dorados discretos, pero priorizando la legibilidad de tablas, datos y herramientas administrativas.
+
+## Pantalla de inicio de sesión
+
+Diseña una pantalla independiente con:
+
+- Logo de VITALIA NETWORK.
+- Campo de correo.
+- Campo de contraseña.
+- Botón «Iniciar sesión».
+- Opción de mostrar u ocultar contraseña.
+- Mensajes de error.
+- Estado de carga.
+- Recuperación de acceso, si se configura.
+
+No muestres credenciales predeterminadas en la interfaz.
+
+## Navegación lateral
+
+Organiza el panel con las siguientes secciones:
+
+1. Dashboard.
+2. Pedidos.
+3. Pagos.
+4. Productos.
+5. Rangos.
+6. Kits.
+7. Extras OneBlock.
+8. Descuentos.
+9. Usuarios administrativos.
+10. Logs y auditoría.
+11. Configuración.
+12. Cerrar sesión.
+
+La navegación debe mostrar claramente la sección activa y poder contraerse en pantallas pequeñas.
+
+---
+
+# 14. DASHBOARD ADMINISTRATIVO
+
+Diseña una vista inicial con tarjetas de estadísticas.
+
+### Indicadores
+
+- Pedidos totales.
+- Pedidos pendientes.
+- Pagos notificados.
+- Pagos en revisión.
+- Pagos confirmados.
+- Entregas pendientes.
+- Pedidos entregados.
+- Pedidos cancelados.
+- Ventas confirmadas.
+- Cupones activos.
+
+Añade gráficos discretos para:
+
+- Evolución de ventas.
+- Pedidos por modalidad.
+- Productos más vendidos.
+- Distribución de estados de pago.
+- Actividad administrativa reciente.
+
+Incluye filtros por fecha y modalidad.
+
+Usa datos ficticios únicamente como contenido de demostración del prototipo y márcalos como tales.
+
+No presentes estadísticas de demostración como datos reales.
+
+---
+
+# 15. GESTIÓN DE PEDIDOS Y PAGOS
+
+## Tabla de pedidos
+
+Incluye columnas para:
+
+- Número de pedido.
+- Fecha.
+- Usuario de Minecraft.
+- Correo.
+- Modalidad.
+- Productos.
+- Total.
+- Método de pago.
+- Estado.
+- Administrador responsable.
+- Acciones.
+
+Incorpora búsqueda, filtros, ordenamiento y paginación.
+
+## Detalle del pedido
+
+Al abrir un pedido, muestra un panel con:
+
+- Datos del comprador.
+- Productos.
+- Desglose del precio.
+- Descuentos.
+- Importe.
+- Método de pago.
+- Código de referencia.
+- Comprobante privado.
+- Historial de cambios.
+- Estado del pedido.
+- Estado de entrega.
+
+## Acciones administrativas
+
+Diseña botones para:
+
+- Marcar pago como revisado.
+- Aprobar pago.
+- Rechazar pago.
+- Cancelar pedido.
+- Marcar entrega pendiente.
+- Marcar entrega como completada.
+- Reintentar entrega.
+- Añadir una nota interna.
+
+Las acciones críticas deben pedir confirmación mediante un modal.
+
+Diferencia claramente los estados:
+
+- Pendiente de pago.
+- Pago notificado.
+- En revisión.
+- Pagado.
+- Entrega pendiente.
+- Entregado.
+- Cancelado.
+- Rechazado.
+
+No confundas el estado de pago con el estado de entrega.
+
+---
+
+# 16. GESTIÓN DE RANGOS Y PRODUCTOS
+
+Crea una sección de administración de productos con pestañas:
+
+- Todos.
+- Rangos.
+- Kits.
+- Herramientas.
+- Mejoras de isla.
+- LifeSteal.
+- OneBlock.
+
+## Editor de producto
+
+El formulario debe permitir editar:
+
+- Nombre.
+- Identificador.
+- Descripción.
+- Precio.
+- Moneda.
+- Modalidad.
+- Categoría.
+- Imagen o icono.
+- Beneficios.
+- Encantamientos.
+- Objetos incluidos.
+- Kit asociado.
+- Comandos o acciones de entrega.
+- Disponibilidad.
+- Estado de publicación.
+- Etiquetas comerciales.
+
+Añade acciones para crear, editar, duplicar, previsualizar, activar y desactivar productos.
+
+Los cambios deben mostrarse en una previsualización de la tarjeta de la tienda.
+
+## Gestión de los seis rangos
+
+Presenta una tabla con Pulso, Ascend, Imperium, Infinity, Vital y Vitalia.
+
+El editor de cada rango debe tener apartados separados para:
+
+1. Precio y descripción.
+2. Beneficios.
+3. Permisos.
+4. Acceso a `/fly`.
+5. Kit incluido.
+6. Modalidad.
+7. Estado de publicación.
+
+El acceso a `/fly` debe estar desactivado para Pulso y Ascend y activado desde Imperium en adelante, según la progresión establecida.
+
+Cada rango debe tener un kit propio y una pantalla para editar su contenido.
+
+El catálogo comercial debe seguir teniendo exactamente seis rangos.
+
+---
+
+# 17. GESTIÓN DE KITS
+
+Crea una sección independiente para administrar todos los kits.
+
+Organiza los kits en:
+
+- Kits de rango.
+- Kits especiales de OneBlock.
+
+La interfaz debe permitir:
+
+- Crear kits.
+- Editar su contenido.
+- Seleccionar objetos.
+- Configurar cantidades.
+- Configurar encantamientos.
+- Definir requisitos.
+- Asociar un kit a un rango.
+- Establecer precio para kits especiales.
+- Activar o desactivar productos.
+- Previsualizar el inventario.
+
+Incluye los seis kits propios de los rangos y los kits especiales Destructor y God.
+
+### Reglas de configuración
+
+- Destructor tiene un precio inicial de $7.00 USD.
+- God no tendrá un precio definitivo hasta que el administrador lo configure.
+- Destructor debe incluir armadura completa de netherita y Protección X.
+- God debe incluir armadura completa de netherita y Protección XV.
+- Los encantamientos adicionales deben poder editarse.
+- No inventes contenido definitivo para los kits de rango.
+
+Utiliza una cuadrícula de inventario inspirada en Minecraft para que el administrador pueda identificar visualmente los objetos.
+
+---
+
+# 18. GESTIÓN DE EXTRAS ONEBLOCK
+
+Esta sección debe ser independiente de la gestión de rangos.
+
+Incluye una tabla con los siguientes productos:
+
+| Producto | Precio inicial |
+|---|---:|
+| Aplanar la isla | $3.00 |
+| Pico 3x3 | $5.00 |
+| Pico Efficiency 35 | Por configurar |
+| Hacha 3x3 | $5.00 |
+| Pack Pico 3x3 + Hacha 3x3 | $7.50 |
+| Kit Destructor | $7.00 |
+| Kit God | Por configurar |
+
+Al editar un extra, el administrador podrá configurar:
+
+- Nombre comercial.
+- Descripción.
+- Precio.
+- Modalidad.
+- Imagen.
+- Objetos.
+- Encantamientos.
+- Efectos.
+- Disponibilidad.
+- Visibilidad en tienda.
+
+El editor de «Aplanar la isla» debe mostrar el material `GRASS_BLOCK` y una descripción que especifique una sola capa de césped.
+
+El editor de herramientas debe diferenciar las propiedades del pico, el hacha y el pack combinado.
+
+El precio de cada producto pendiente de configuración no debe mostrarse como cero ni permitir compras hasta que se asigne un precio válido.
+
+---
+
+# 19. CÓDIGOS DE DESCUENTO
+
+Diseña un módulo de cupones con:
+
+- Código.
+- Tipo de descuento.
+- Valor.
+- Fecha de inicio.
+- Fecha de vencimiento.
+- Usos disponibles.
+- Usos realizados.
+- Productos aplicables.
+- Modalidades aplicables.
+- Estado.
+
+Incluye botones para crear, editar, activar, desactivar y eliminar cupones.
+
+Diseña un formulario para descuentos porcentuales y descuentos de importe fijo.
+
+Incluye límites por comprador y compra mínima.
+
+Muestra el historial de uso y quién creó o modificó cada cupón.
+
+---
+
+# 20. USUARIOS ADMINISTRATIVOS Y PERMISOS
+
+Diseña una sección de gestión de usuarios del panel.
+
+Incluye columnas para:
+
+- Nombre.
+- Correo.
+- Rol.
+- Estado.
+- Último acceso.
+- Fecha de creación.
+- Acciones.
+
+Roles:
+
+- `SUPER_ADMIN`: control completo.
+- `ADMIN`: gestión de catálogo, pedidos y descuentos.
+- `SUPPORT`: revisión de pedidos y soporte con permisos limitados.
+- `AUDITOR`: acceso de solo lectura a pedidos y registros.
+
+Incluye formularios para invitar usuarios, cambiar roles, activar o desactivar cuentas y revocar sesiones.
+
+Muestra los permisos de cada rol en una tabla clara.
+
+Los cambios de permisos deben representarse como acciones administrativas sensibles que requieren confirmación.
+
+---
+
+# 21. LOGS Y AUDITORÍA
+
+Crea una sección independiente llamada «Logs».
+
+Debe permitir consultar:
+
+- Inicios de sesión.
+- Intentos fallidos.
+- Cambios de precios.
+- Cambios de beneficios.
+- Creación y eliminación de cupones.
+- Aprobaciones y rechazos de pagos.
+- Cambios de estado de pedidos.
+- Entregas y reintentos.
+- Cambios de configuración.
+- Altas y modificaciones de administradores.
+
+Cada registro debe mostrar:
+
+- Fecha y hora.
+- Administrador.
+- Acción.
+- Recurso afectado.
+- Resultado.
+- Detalles del cambio.
+
+Incluye búsqueda, filtros por fecha, administrador, acción y tipo de recurso.
+
+Utiliza una tabla compacta, legible y con detalles expandibles.
+
+Los logs deben ser de solo lectura en la interfaz ordinaria.
+
+---
+
+# 22. CONFIGURACIÓN GENERAL
+
+Diseña una pantalla con pestañas para:
+
+### Tienda
+
+- Nombre comercial.
+- Logotipo.
+- Descripción.
+- Moneda principal.
+- Visibilidad de productos.
+- Mensajes de mantenimiento.
+
+### Pagos
+
+- Imagen QR de Yape.
+- Imagen QR de Plin.
+- Titular: Milvan Bac.
+- Tipo de cambio.
+- Configuración visual de PayPal.
+- Instrucciones de pago.
+
+El tipo de cambio inicial debe ser `1 USD = S/ 3.65`, editable por un administrador autorizado.
+
+### Minecraft
+
+- Modalidades disponibles.
+- Identificadores de productos.
+- Kits.
+- Beneficios.
+- Comandos de entrega.
+- Estado de conexión de la integración.
+
+No muestres claves secretas, contraseñas ni tokens.
+
+### Seguridad
+
+- Usuarios administrativos.
+- Sesiones.
+- Configuración de acceso.
+- Opciones de auditoría.
+
+### Apariencia
+
+- Logotipo.
+- Imágenes.
+- Colores.
+- Etiquetas.
+- Banners.
+- Vista previa de la tienda.
+
+---
+
+# 23. ESTADOS VISUALES E INTERACCIONES
+
+Diseña también todos los estados necesarios para que el prototipo parezca un producto real.
+
+Incluye:
+
+- Carga de datos.
+- Catálogo vacío.
+- Búsqueda sin resultados.
+- Producto agotado o deshabilitado.
+- Error de validación.
+- Cupón inválido.
+- Cupón aplicado.
+- Carrito vacío.
+- Pedido pendiente.
+- Pago en revisión.
+- Pago aprobado.
+- Pago rechazado.
+- Entrega pendiente.
+- Entrega completada.
+- Acceso administrativo denegado.
+- Confirmación de eliminación.
+- Confirmación de cambios.
+- Sesión expirada.
+
+Los botones, filtros, pestañas, modales, selectores y formularios deben tener comportamientos visuales coherentes en el prototipo.
+
+No crees botones que aparenten acciones sin definir su estado de interacción.
+
+---
+
+# 24. EXPERIENCIA DE USUARIO Y ACCESIBILIDAD
+
+La tienda debe resultar intuitiva para jugadores que compran desde un ordenador o un teléfono.
+
+Requisitos:
+
+- Diseño responsive.
+- Navegación clara.
+- Tipografía legible.
+- Contraste suficiente.
+- Botones fáciles de identificar.
+- Formularios con etiquetas.
+- Errores junto a los campos correspondientes.
+- Modales con acciones claras.
+- Tablas administrativas adaptables.
+- Jerarquía visual consistente.
+- Animaciones discretas.
+- Estados de foco y selección.
+
+Evita que el comprador tenga que recorrer páginas innecesarias para adquirir un producto.
+
+En el panel, prioriza la velocidad de trabajo y la facilidad para localizar pedidos pendientes.
+
+---
+
+# 25. COMPONENTES REUTILIZABLES
+
+Organiza visualmente el proyecto mediante componentes consistentes:
+
+- Navbar.
+- Footer.
+- Tarjeta de rango.
+- Tarjeta de kit.
+- Tarjeta de herramienta.
+- Tarjeta de extra.
+- Modal de producto.
+- Cuadrícula de inventario.
+- Carrito lateral.
+- Resumen de pedido.
+- Selector de modalidad.
+- Selector de método de pago.
+- Campo de formulario.
+- Etiqueta de estado.
+- Tabla administrativa.
+- Filtros.
+- Modal de confirmación.
+- Sidebar administrativo.
+- Tarjeta de estadística.
+- Gráfico.
+- Línea de tiempo de pedido.
+- Notificación.
+- Estado vacío.
+- Estado de carga.
+
+Mantén los mismos componentes visuales para las mismas funciones, evitando diseños inconsistentes entre páginas.
+
+---
+
+# 26. ORGANIZACIÓN DEL TRABAJO EN STITCH
+
+Diseña el proyecto como dos experiencias coordinadas, pero independientes.
+
+## Experiencia 1 — Tienda pública
+
+Prioriza estas pantallas:
+
+1. Inicio.
+2. Catálogo de rangos.
+3. Catálogo OneBlock.
+4. Catálogo LifeSteal.
+5. Ficha de rango.
+6. Ficha de herramienta.
+7. Ficha de kit.
+8. Catálogo de extras.
+9. Carrito.
+10. Checkout.
+11. Pago.
+12. Consulta de pedidos.
+
+## Experiencia 2 — Panel administrativo
+
+Prioriza estas pantallas:
+
+1. Inicio de sesión.
+2. Dashboard.
+3. Lista de pedidos.
+4. Detalle del pedido.
+5. Revisión de pagos.
+6. Catálogo de productos.
+7. Editor de rangos.
+8. Gestión de kits.
+9. Gestión de extras OneBlock.
+10. Códigos de descuento.
+11. Usuarios administrativos.
+12. Logs y auditoría.
+13. Configuración general.
+
+Crea una navegación coherente entre todas las pantallas y conserva la identidad visual en el conjunto.
+
+La prioridad inicial es obtener una UI completa y visualmente consistente. No sacrifiques pantallas importantes para concentrarte únicamente en la página de inicio.
+
+---
+
+# 27. REGLAS QUE NO DEBES INCUMPLIR
+
+1. Mantener separados el apartado público y el administrativo.
+2. Mantener la identidad visual negra y dorada.
+3. Conservar exactamente los seis rangos: Pulso, Ascend, Imperium, Infinity, Vital y Vitalia.
+4. No superar los $29 USD en el precio de los rangos.
+5. Incorporar `/fly` desde Imperium, incluido.
+6. Asignar un kit propio a cada uno de los seis rangos.
+7. Mantener los kits especiales separados de los kits de rango.
+8. Incluir «Aplanar la isla» por $3.00 USD.
+9. Incluir Pico 3x3 y Hacha 3x3 por $5.00 USD cada uno.
+10. Incluir el Pack 3x3 por $7.50 USD.
+11. Incluir Pico Efficiency 35 con Eficiencia XXXV y Fortuna V, sin otros encantamientos.
+12. Mantener el precio del Pico Efficiency 35 pendiente de configuración.
+13. Incluir Kit Destructor por $7.00 USD, con armadura completa de netherita y Protección X.
+14. Incluir Kit God con armadura completa de netherita y Protección XV, sin inventar su precio.
+15. No mezclar productos de OneBlock con los de LifeSteal.
+16. No inventar QR de pago.
+17. No simular pagos confirmados ni entregas completadas.
+18. No inventar beneficios definitivos para los kits de rango.
+19. Diseñar el panel administrativo para gestionar productos, precios, kits, pedidos, pagos, cupones, usuarios y auditoría.
+20. Utilizar información de demostración únicamente para la previsualización, diferenciándola de los datos reales.
+21. No crear imágenes publicitarias externas como sustituto de las pantallas UI. El resultado debe ser una interfaz web, no un póster.
+22. No implementar ahora un backend ficticio: prepara el diseño para una futura implementación real.
+
+---
+
+# OBJETIVO FINAL
+
+Entrega un diseño UI/UX completo para **VITALIA NETWORK STORE**, con una tienda premium de Minecraft y un panel administrativo independiente.
+
+La tienda debe permitir visualizar los seis rangos comerciales, sus kits incluidos, el `/fly` desde Imperium, los kits especiales Destructor y God, las herramientas 3x3, el pico Efficiency 35 y la mejora «Aplanar la isla».
+
+El panel administrativo debe permitir visualizar cómo se gestionarán los productos, precios, rangos, kits, extras, pedidos, pagos, descuentos, usuarios y logs.
+
+**El resultado debe parecer la interfaz de una tienda gaming profesional lista para pasar a desarrollo**, con navegación consistente, componentes reutilizables, pantallas completas y una experiencia excelente tanto en escritorio como en móvil.
+
+Primero resuelve el diseño de la interfaz. La conexión real con el servidor de Minecraft, la base de datos y los métodos de pago se implementará en una fase posterior.

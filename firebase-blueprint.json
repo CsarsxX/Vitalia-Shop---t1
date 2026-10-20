@@ -1,0 +1,27 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "Represents a store purchase order",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "mcUsername": { "type": "string" },
+        "email": { "type": "string" },
+        "modality": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "paymentStatus": { "type": "string" },
+        "deliveryStatus": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "total": { "type": "number" }
+      },
+      "required": ["id", "mcUsername", "email", "modality", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Stores user purchase orders"
+    }
+  }
+}

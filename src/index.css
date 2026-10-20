@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #050505;
+    --bg-sec: #0A0A0A;
+    --surface-card: #101010;
+    --surface-elevated: #161616;
+    --border-subtle: #252525;
+    --gold-primary: #D4AF37;
+    --gold-bright: #FFD700;
+    --gold-soft: #FEF9C2;
+    --text-primary: #F5F5F5;
+    --text-secondary: #A0A0A0;
+    --error-red: #FF4545;
+    --success-green: #00FF87;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #050505;
+    color: #F5F5F5;
+  }
+
+  /* Custom scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0A0A0A;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #252525;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #D4AF37;
+  }
+}
+
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
+
+.font-mono-numbers {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Minecraft inventory slot grid styling */
+.mc-slot {
+  background: #181818;
+  border-top: 2px solid #0f0f0f;
+  border-left: 2px solid #0f0f0f;
+  border-bottom: 2px solid #2a2a2a;
+  border-right: 2px solid #2a2a2a;
+}
+.mc-slot:hover {
+  background: #252525;
+  border-color: #D4AF37;
+}
+
+/* Subtle, smooth golden falling meteor animation */
+@keyframes meteor-fall {
+  0% {
+    transform: translate3d(240px, -40px, 0) rotate(-32deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.75;
+  }
+  70% {
+    opacity: 0.65;
+  }
+  98% {
+    transform: translate3d(-520px, 480px, 0) rotate(-32deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(-520px, 480px, 0) rotate(-32deg);
+    opacity: 0;
+  }
+}
+
+@keyframes meteor-fall-secondary {
+  0% {
+    transform: translate3d(360px, -60px, 0) rotate(-30deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.45;
+  }
+  75% {
+    opacity: 0.35;
+  }
+  95% {
+    transform: translate3d(-400px, 520px, 0) rotate(-30deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(-400px, 520px, 0) rotate(-30deg);
+    opacity: 0;
+  }
+}
+
+.animate-meteor-smooth {
+  animation: meteor-fall 9s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.animate-meteor-secondary {
+  animation: meteor-fall-secondary 12.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+  animation-delay: 4.8s;
+  will-change: transform, opacity;
+}
+
